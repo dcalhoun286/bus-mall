@@ -2,108 +2,141 @@
 
 // global variables
 // all ads array
-var allPhotos = [];
+var allAds = [];
 // I can easily adjust my max with this variable
 var maxClicksAllowed = 25;
 var actualClicks = 0;
 
 // get some ids from the DOM
 var myContainer = document.getElementById('container');
-var imageOneElement = document.createElement('img');
-var imageTwoElement = document.createElement('img');
-var imageThreeElement = document.createElement('img');
-var imageFourElement = document.createElement('img');
-var imageFiveElement = document.createElement('img');
-var imageSixElement = document.createElement('img');
-var imageSevenElement = document.createElement('img');
-var imageEightElement = document.createElement('img');
-var imageNineElement = document.createElement('img');
-var imageTenElement = document.createElement('img');
-var imageElevenElement = document.createElement('img');
-var imageTwelveElement = document.createElement('img');
-var imageThirteenElement = document.createElement('img');
-var imageFourteenElement = document.createElement('img');
-var imageFifteenElement = document.createElement('img');
-var imageSixteenElement = document.createElement('img');
-var imageSeventeenElement = document.createElement('img');
-var imageEighteenElement = document.createElement('img');
-var imageNineteenElement = document.createElement('img');
-var imageTwentyElement = document.createElement('img');
+var imageOneElement = document.createElement('image-one');
+var imageTwoElement = document.createElement('image-two');
+var imageThreeElement = document.createElement('image-three');
 var resultsList = document.getElementById('results');
 
 // ad constructor
 // properties - src name alt title views clicks
 function Ad(name, src = 'jpg') {
   this.name = name;
-  this.src = `img/${name}.${src}`;
+  this.src = `/img/${name}.${src}`;
   this.alt = `${name}`;
   this.title = `${name}`;
   this.views = 0;
   this.votes = 0;
-  allPhotos.push(this);
+  allAds.push(this);
 }
 
 // instantiations
 var bag = new Ad('bag');
-console.log(bag);
 var banana = new Ad('banana');
-console.log(banana);
 var bathroom = new Ad('bathroom');
-console.log(bathroom);
 var boots = new Ad('boots');
-console.log(boots);
 var breakfast = new Ad('breakfast');
-console.log(breakfast);
 var bubblegum = new Ad('bubblegum');
-console.log(bubblegum);
 var chair = new Ad('chair');
-console.log(chair);
 var cthulhu = new Ad('cthulhu');
-console.log(cthulhu);
 var dogduck = new Ad('dog-duck');
-console.log(dogduck);
 var dragon = new Ad('dragon');
-console.log(dragon);
 var pen = new Ad('pen');
-console.log(pen);
 var petsweep = new Ad('pet-sweep');
-console.log(petsweep);
 var scissors = new Ad('scissors');
-console.log(scissors);
 var shark = new Ad('shark');
-console.log(shark);
 var sweep = new Ad('sweep', 'png');
-console.log(sweep);
 var tauntaun = new Ad('tauntaun');
-console.log(tauntaun);
 var unicorn = new Ad('unicorn');
-console.log(unicorn);
 var usb = new Ad('usb', 'gif');
-console.log(usb);
 var watercan = new Ad('water-can');
-console.log(watercan);
 var wineglass = new Ad('wine-glass');
-console.log(wineglass);
 
 // src name/alt/tile views clicks
 
 // DETERMINE WHICH AD GETS VIEWED
-// get random index - use getRandomInt
+// get random index
+// documentation: used getRandomInt from MDN docs
+function getRandomIndex(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 // with two - we need validation - is goat unique?
 // assign a src, alt, and title to image
-imageOneElement.src = allPhotos[0].src;
-imageOneElement.alt = allPhotos[0].name;
-imageOneElement.title = allPhotos[0].name;
+function renderAds(){
+  var adOneIndex = getRandomIndex(allAds.length);
+  var adTwoIndex = getRandomIndex(allAds.length);
+  var adThreeIndex = getRandomIndex(allAds.length);
+
+  // validation
+  while (adOneIndex === adTwoIndex) {
+    adTwoIndex = getRandomIndex(allAds.length);
+  }
+
+  while (adOneIndex === adThreeIndex) {
+    adThreeIndex = getRandomIndex(allAds.length);
+  }
+
+  while (adTwoIndex === adThreeIndex) {
+    adThreeIndex = getRandomIndex(allAds.length);
+  }
+
+  imageOneElement.src = allAds[adOneIndex].src;
+  imageOneElement.alt = allAds[adOneIndex].name;
+  imageOneElement.title = allAds[adOneIndex].name;
+  allAds[adOneIndex].views++;
+  allAds[adOneIndex].votes++;
+  console.log(allAds[adOneIndex]);
+
+  imageTwoElement.src = allAds[adTwoIndex].src;
+  imageTwoElement.alt = allAds[adTwoIndex].name;
+  imageTwoElement.title = allAds[adTwoIndex].name;
+  allAds[adTwoIndex].views++;
+  allAds[adTwoIndex].votes++;
+  console.log(allAds[adTwoIndex]);
+
+  imageThreeElement.src = allAds[adThreeIndex].src;
+  imageThreeElement.alt = allAds[adThreeIndex].name;
+  imageThreeElement.title = allAds[adThreeIndex].name;
+  allAds[adThreeIndex].views++;
+  allAds[adThreeIndex].votes++;
+  console.log(allAds[adThreeIndex]);
+}
 // log the view - views start at 0 and get incremented with every view
-// example: allPhotos[1].views++;
+
+// example: allAds[1].views++;
 // call a function that assigns the img srcs
 
 // event handler
-// keep trach of WHICH image and number of clicks. Increment the correct clicks/vote/like property
-// reassign image src properties - call that function again
-// validation for when we hit our max clicks
-// WHEN WE HIT OUR MAX CLICKS:
-// #1 remove eventlistener
-// #2 show results - render list with string including name, views, and votes
+function handleClick(event) {
+  actualClicks++;
+  var clickedAd = event.target.title;
+  console.log(clickedAd);
 
+  // keep trach of WHICH image and number of clicks. Increment the correct clicks/vote/like property
+  for (var i = 0; i < allAds.length; i++) {
+    if (clickedAd === allAds[i].name) {
+      allAds[i].votes++;
+    }
+  }
+  // reassign image src properties - call that function again
+  renderAds();
+
+  // validation for when we hit our max clicks
+  if (actualClicks === maxClicksAllowed) {
+    // WHEN WE HIT OUR MAX CLICKS:
+    // #1 remove eventlistener
+    myContainer.removeEventListener('click', handleClick);
+    // #2 show results - render list with string including name, views, and votes
+    for (var j = 0; j < allAds.length; j++) {
+      // create element
+      var liElement = document.createElement('li');
+      // give it content
+      liElement.textContent = `${allAds[j].name} was viewed ${allAds[j].views} times and clicked ${allAds[j].votes} times`;
+      //append it to the DOM
+      resultsList.appendChild(liElement);
+
+    }
+  }
+}
+
+// executable code
+renderAds();
 // event listner attached to the container
+myContainer.addEventListener('click', handleClick);
