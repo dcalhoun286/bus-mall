@@ -58,13 +58,20 @@ function getRandomIndex(max) {
 }
 
 // with two - we need validation - is goat unique?
+
 // assign a src, alt, and title to image
+
+// ***!!! change code before if statement as well as code above to dry out code by entering the number of images that are being displayed into an array !!!***
+
 function renderAds(){
   var adOneIndex = getRandomIndex(allAds.length);
   var adTwoIndex = getRandomIndex(allAds.length);
   var adThreeIndex = getRandomIndex(allAds.length);
 
   // validation
+
+  // ***!!! How do I add an arithmetic permutation/combination so I don't have to repeat this code so many times? This might be the key: https://stackoverflow.com/questions/55422804/best-way-to-combine-a-permutation-of-conditional-statements !!!***
+
   while (adOneIndex === adTwoIndex) {
     adTwoIndex = getRandomIndex(allAds.length);
   }
