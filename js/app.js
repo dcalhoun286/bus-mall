@@ -130,6 +130,9 @@ function handleClick(event) {
     // WHEN WE HIT OUR MAX CLICKS:
     // #1 remove eventlistener
     myContainer.removeEventListener('click', handleClick);
+
+    // ***!!! Maybe reference the CSS for when button is clicked that will activate the list being rendered to the DOM !!!***
+
     // #2 show results - render list with string including name, views, and votes
     for (var j = 0; j < allAds.length; j++) {
       // create element
@@ -145,5 +148,42 @@ function handleClick(event) {
 
 // executable code
 renderAds();
-// event listner attached to the container
+
+// chart info needed:
+// 1. array of names
+// 2. array of votes/clicks
+// 3. array of views
+
+/* function renderChart() {
+  var namesArray = [];
+  var votesArray = [];
+  var viewsArray = [];
+
+  for (var i = 0; i < allAds.length; i++) {
+    namesArray.push(allGoats[i].name);
+    votesArray.push(allGoats[i].votes);
+    viewsArray.push(allGoats[i].views);
+  }
+
+  console.log(`namesArray: ${namesArray}
+  votesArray: ${votesArray}
+  viewsArray: ${viewsArray}`);
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var dataObject = {
+    type: 'bar',
+    data: {
+      labels: namesArray,
+      datasets: [{
+        label: 'Number of Votes',
+        data: votesArray,
+        backgroundColor:
+          'rgba(255, 99, 132, 0.2)',
+        borderColor: 
+    }
+  }
+}
+*/
+
+// event listner attached to the container ... this might be inside the renderChart() function
 myContainer.addEventListener('click', handleClick);
