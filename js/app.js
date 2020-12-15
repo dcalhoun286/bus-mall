@@ -9,16 +9,16 @@ var actualClicks = 0;
 
 // get some ids from the DOM
 var myContainer = document.getElementById('container');
-var imageOneElement = document.createElement('image-one');
-var imageTwoElement = document.createElement('image-two');
-var imageThreeElement = document.createElement('image-three');
+var imageOneElement = document.getElementById('image-one');
+var imageTwoElement = document.getElementById('image-two');
+var imageThreeElement = document.getElementById('image-three');
 var resultsList = document.getElementById('results');
 
 // ad constructor
 // properties - src name alt title views clicks
 function Ad(name, src = 'jpg') {
   this.name = name;
-  this.src = `/img/${name}.${src}`;
+  this.src = `img/${name}.${src}`;
   this.alt = `${name}`;
   this.title = `${name}`;
   this.views = 0;
@@ -136,7 +136,7 @@ function handleClick(event) {
     // #2 show results - render list with string including name, views, and votes
     for (var j = 0; j < allAds.length; j++) {
       // create element
-      var liElement = document.createElement('li');
+      var liElement = document.getElementById('li');
       // give it content
       liElement.textContent = `${allAds[j].name} was viewed ${allAds[j].views} times and clicked ${allAds[j].votes} times`;
       //append it to the DOM
