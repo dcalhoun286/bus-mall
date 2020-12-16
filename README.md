@@ -1,10 +1,13 @@
 # bus-mall
 
-## Links and Resources
+## Contributors, Links and Resources
 
 - [Eric Meyer CSS Reset](https://meyerweb.com/eric/tools/css/reset/)
 - Used getRandomInt from [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
 - used [this GitHub repo](https://github.com/codefellows/seattle-201d70/tree/master/class-11/demo) as a guide to complete my lab assignment
+- [Seamus Brown](https://github.com/shaybrow) contributed to this project by:
+  - helping me to debug my code to get my images to display properly
+- [Chance Harmon](https://github.com/ChanceHarmon) guided me through my queue for photos that would be displayed on the DOM
 
 ### About This Project
 
