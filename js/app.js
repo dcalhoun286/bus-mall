@@ -3,6 +3,7 @@
 // global variables
 // all ads array
 var allAds = [];
+var renderQueue = [];
 // I can easily adjust my max with this variable
 var maxClicksAllowed = 25;
 var actualClicks = 0;
@@ -52,37 +53,51 @@ var wineglass = new Ad('wine-glass');
 
 // DETERMINE WHICH AD GETS VIEWED
 // get random index
-// documentation: used getRandomInt from MDN docs
+// documentation: I used getRandomInt from MDN docs
 function getRandomIndex(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-// with two - we need validation - is goat unique?
+function renderAds() {
+  while (renderQueue.length < 6) {
+    var tempIndex = getRandomIndex(allAds.length);
 
-// assign a src, alt, and title to image
-
-// ***!!! change code before if statement as well as code above to dry out code by entering the number of images that are being displayed into an array !!!***
-
-function renderAds(){
-  var adOneIndex = getRandomIndex(allAds.length);
-  var adTwoIndex = getRandomIndex(allAds.length);
-  var adThreeIndex = getRandomIndex(allAds.length);
-
-  // validation
-
-  // ***!!! How do I add an arithmetic permutation/combination so I don't have to repeat this code so many times? This might be the key: https://stackoverflow.com/questions/55422804/best-way-to-combine-a-permutation-of-conditional-statements !!!***
-
-  while (adOneIndex === adTwoIndex) {
-    adTwoIndex = getRandomIndex(allAds.length);
+    while (renderQueue.includes(tempIndex)) {
+      tempIndex = getRandomIndex(allAds.length);
+    }
+    renderQueue.push(tempIndex);
   }
+  console.log(renderQueue);
 
-  while (adOneIndex === adThreeIndex) {
-    adThreeIndex = getRandomIndex(allAds.length);
-  }
+  var adOneIndex = renderQueue.shift();
+  var adTwoIndex = renderQueue.shift();
+  var adThreeIndex = renderQueue.shift();
 
-  while (adTwoIndex === adThreeIndex) {
-    adThreeIndex = getRandomIndex(allAds.length);
-  }
+
+  /* The commented out code below is corpse code, but it was an example I was shown that I want to keep for review on how to render my photos in a different way */
+
+  // queue: any of the first three images in the array don't match any of the last three
+  // arr.pop
+
+  // this array should have max length of three
+  // var previousUsed = [];
+  // var list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+  // previousUsed.push(adOneIndex);
+  // console.log(previousUsed.push(adOneIndex));
+  // previousUsed.push(adTwoIndex);
+  // console.log(previousUsed.push(adTwoIndex));
+  // previousUsed.push(adThreeIndex);
+  // console.log(previousUsed.push(adThreeIndex));
+  // after the first three above are done, set them into previousUsed so they can be stored
+
+
+  // previousUsed[0] = index[0] -- can do for all three indexes
+
+  // while((index[0] === index[1] && !previousUsed.includes(index[1])){
+  // previousUsed.unshift(newRandomNumber) // add the new index
+  // previousUsed.pop(); // take off last index
+  // }
 
   imageOneElement.src = allAds[adOneIndex].src;
   imageOneElement.alt = allAds[adOneIndex].name;
@@ -124,6 +139,44 @@ function handleClick(event) {
   }
   // reassign image src properties - call that function again
   renderAds();
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
 
   // validation for when we hit our max clicks
   if (actualClicks === maxClicksAllowed) {
@@ -136,12 +189,11 @@ function handleClick(event) {
     // #2 show results - render list with string including name, views, and votes
     for (var j = 0; j < allAds.length; j++) {
       // create element
-      var liElement = document.getElementById('li');
+      var liElement = document.createElement('li');
       // give it content
       liElement.textContent = `${allAds[j].name} was viewed ${allAds[j].views} times and clicked ${allAds[j].votes} times`;
       //append it to the DOM
       resultsList.appendChild(liElement);
-
     }
   }
 }
@@ -154,36 +206,22 @@ renderAds();
 // 2. array of votes/clicks
 // 3. array of views
 
-/* function renderChart() {
+function renderChart() {
   var namesArray = [];
   var votesArray = [];
   var viewsArray = [];
 
   for (var i = 0; i < allAds.length; i++) {
-    namesArray.push(allGoats[i].name);
-    votesArray.push(allGoats[i].votes);
-    viewsArray.push(allGoats[i].views);
+    namesArray.push(allAds[i].name);
+    votesArray.push(allAds[i].votes);
+    viewsArray.push(allAds[i].views);
   }
 
   console.log(`namesArray: ${namesArray}
   votesArray: ${votesArray}
   viewsArray: ${viewsArray}`);
 
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var dataObject = {
-    type: 'bar',
-    data: {
-      labels: namesArray,
-      datasets: [{
-        label: 'Number of Votes',
-        data: votesArray,
-        backgroundColor:
-          'rgba(255, 99, 132, 0.2)',
-        borderColor: 
-    }
-  }
 }
-*/
 
 // event listner attached to the container ... this might be inside the renderChart() function
 myContainer.addEventListener('click', handleClick);
