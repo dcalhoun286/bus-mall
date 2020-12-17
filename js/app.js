@@ -26,31 +26,35 @@ function Ad(name, src = 'jpg') {
   allAds.push(this);
 }
 
+// all reference to goat instances is lost (see console), AND we just have objects (no prototype methods to worry about); if statement for if user has local storage
 var retrievedProducts = localStorage.getItem('products');
-var parsedProducts = JSON.parse(retrievedProducts);
-console.log(parsedProducts);
+if(retrievedProducts) {
+  allAds = JSON.parse(retrievedProducts);
+  console.log(allAds);
+} else {
+  // instantiations
+  new Ad('bag');
+  new Ad('banana');
+  new Ad('bathroom');
+  new Ad('boots');
+  new Ad('breakfast');
+  new Ad('bubblegum');
+  new Ad('chair');
+  new Ad('cthulhu');
+  new Ad('dog-duck');
+  new Ad('dragon');
+  new Ad('pen');
+  new Ad('pet-sweep');
+  new Ad('scissors');
+  new Ad('shark');
+  new Ad('sweep', 'png');
+  new Ad('tauntaun');
+  new Ad('unicorn');
+  new Ad('usb', 'gif');
+  new Ad('water-can');
+  new Ad('wine-glass');
+}
 
-// instantiations
-new Ad('bag');
-new Ad('banana');
-new Ad('bathroom');
-new Ad('boots');
-new Ad('breakfast');
-new Ad('bubblegum');
-new Ad('chair');
-new Ad('cthulhu');
-new Ad('dog-duck');
-new Ad('dragon');
-new Ad('pen');
-new Ad('pet-sweep');
-new Ad('scissors');
-new Ad('shark');
-new Ad('sweep', 'png');
-new Ad('tauntaun');
-new Ad('unicorn');
-new Ad('usb', 'gif');
-new Ad('water-can');
-new Ad('wine-glass');
 
 // src name/alt/tile views clicks
 
@@ -77,31 +81,6 @@ function renderAds() {
   var adTwoIndex = renderQueue.shift();
   var adThreeIndex = renderQueue.shift();
 
-  /* The commented out code below is corpse code, but it was an example I was shown that I want to keep for review on how to render my photos in a different way */
-
-  // queue: any of the first three images in the array don't match any of the last three
-  // arr.pop
-
-  // this array should have max length of three
-  // var previousUsed = [];
-  // var list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-  // previousUsed.push(adOneIndex);
-  // console.log(previousUsed.push(adOneIndex));
-  // previousUsed.push(adTwoIndex);
-  // console.log(previousUsed.push(adTwoIndex));
-  // previousUsed.push(adThreeIndex);
-  // console.log(previousUsed.push(adThreeIndex));
-  // after the first three above are done, set them into previousUsed so they can be stored
-
-
-  // previousUsed[0] = index[0] -- can do for all three indexes
-
-  // while((index[0] === index[1] && !previousUsed.includes(index[1])){
-  // previousUsed.unshift(newRandomNumber) // add the new index
-  // previousUsed.pop(); // take off last index
-  // }
-
   imageOneElement.src = allAds[adOneIndex].src;
   imageOneElement.alt = allAds[adOneIndex].name;
   imageOneElement.title = allAds[adOneIndex].name;
@@ -121,11 +100,6 @@ function renderAds() {
   console.log(allAds[adThreeIndex]);
 }
 
-// log the view - views start at 0 and get incremented with every view
-
-// example: allAds[1].views++;
-// call a function that assigns the img srcs
-
 // event handler
 function handleClick(event) {
   actualClicks++;
@@ -138,6 +112,7 @@ function handleClick(event) {
       allAds[i].votes++;
     }
   }
+
   // reassign image src properties - call that function again
   renderAds();
 
@@ -156,8 +131,6 @@ function handleClick(event) {
 
 // executable code
 renderAds();
-
-// 3. array of views
 
 function renderChart() {
   var namesArray = [];
@@ -211,5 +184,5 @@ function renderChart() {
   var myChart = new Chart(ctx, dataObject); // eslint-disable-line
 }
 
-// event listner attached to the container ... this might be inside the renderChart() function
+// event listner attached to the container
 myContainer.addEventListener('click', handleClick);
