@@ -8,6 +8,8 @@
 - [Seamus Brown](https://github.com/shaybrow) contributed to this project by:
   - helping me to debug my code to get my images to display properly
 - [Chance Harmon](https://github.com/ChanceHarmon) guided me through my queue for photos that would be displayed on the DOM
+- [Jason D](https://github.com/JasonDormier) and [Jason Q](https://github.com/stubtail42) contributed to this project by:
+  - helping me debug my votes and views counters
 
 ### About This Project
 
