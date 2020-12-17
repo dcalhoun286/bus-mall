@@ -26,6 +26,10 @@ function Ad(name, src = 'jpg') {
   allAds.push(this);
 }
 
+var retrievedProducts = localStorage.getItem('products');
+var parsedProducts = JSON.parse(retrievedProducts);
+console.log(parsedProducts);
+
 // instantiations
 new Ad('bag');
 new Ad('banana');
@@ -144,6 +148,9 @@ function handleClick(event) {
     myContainer.removeEventListener('click', handleClick);
 
     renderChart();
+
+    var stringifiedProducts = JSON.stringify(allAds);
+    localStorage.setItem('products', stringifiedProducts);
   }
 }
 
