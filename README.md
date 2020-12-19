@@ -13,9 +13,10 @@
 
 ### About This Project
 
-For this assignment, I was given a case in which I was hired by a startup called BusMall, whose catalogues are placed on local busses for potential customers to look at while commuting through traffic. BusMall only wants to feature items in this catalog that are most likely to sell, so I created a market analysis on proposed products to test my client's potential customer interest before these items are placed in the catalog.
+For this assignment, I was given a case in which I was hired by a startup called BusMall, whose catalogues are placed on local busses for potential customers to look at while commuting through traffic. BusMall only wants to feature items in this catalog that are most likely to sell, so I created a market analysis on proposed products to test my client's potential customer interest before these items are placed in the catalog.There are three ads shown at the same time, and an ad will only repeat itself at the most every six images displayed.
 
 #### Objectives/Feature Tasks
 
 - App's purpose: Displays potential products to individuals in focus groups (three products at a time, side-by-side-by-side).
 - Results cannot be shown to users until there have been a total of 25 selections made to keep the product selection process as untainted as possible.
+- a dynamic bar chart will render once the event listener has been removed.
