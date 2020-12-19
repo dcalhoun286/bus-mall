@@ -30,7 +30,6 @@ function Ad(name, src = 'jpg') {
 var retrievedProducts = localStorage.getItem('products');
 if(retrievedProducts) {
   allAds = JSON.parse(retrievedProducts);
-  console.log(allAds);
 } else {
   // instantiations
   new Ad('bag');
@@ -74,8 +73,6 @@ function renderAds() {
     }
     renderQueue.push(tempIndex);
   }
-  console.log(renderQueue);
-  console.log(allAds);
 
   var adOneIndex = renderQueue.shift();
   var adTwoIndex = renderQueue.shift();
@@ -85,26 +82,22 @@ function renderAds() {
   imageOneElement.alt = allAds[adOneIndex].name;
   imageOneElement.title = allAds[adOneIndex].name;
   allAds[adOneIndex].views++;
-  console.log(allAds[adOneIndex]);
 
   imageTwoElement.src = allAds[adTwoIndex].src;
   imageTwoElement.alt = allAds[adTwoIndex].name;
   imageTwoElement.title = allAds[adTwoIndex].name;
   allAds[adTwoIndex].views++;
-  console.log(allAds[adTwoIndex]);
 
   imageThreeElement.src = allAds[adThreeIndex].src;
   imageThreeElement.alt = allAds[adThreeIndex].name;
   imageThreeElement.title = allAds[adThreeIndex].name;
   allAds[adThreeIndex].views++;
-  console.log(allAds[adThreeIndex]);
 }
 
 // event handler
 function handleClick(event) {
   actualClicks++;
   var clickedAd = event.target.title;
-  console.log(clickedAd);
 
   // keep trach of WHICH image and number of clicks. Increment the correct clicks/vote/like property
   for (var i = 0; i < allAds.length; i++) {
